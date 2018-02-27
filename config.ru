@@ -1,2 +1,2 @@
-require 'hellomonkey'
+require './hellomonkey'
 run Sinatra::Application
