@@ -4,7 +4,7 @@ require 'twilio-ruby'
 
 get '/' do
   'Index Page'
-ends
+end
 
 get '/hello-monkey' do
   Twilio::TwiML::VoiceResponse.new do |r|
