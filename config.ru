@@ -1,2 +1,2 @@
-require 'hellomonkey.rb'
+require 'hellomonkey'
 run Sinatra::Application
