@@ -7,7 +7,7 @@ get '/' do
 end
 
 get '/hello-monkey' do
-  from = params['From'] || 'nowehere'
+  from = params['From'] || 'nowhere'
   text = "Hello Monkey. You come from #{from}"
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say text
