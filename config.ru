@@ -1,3 +1,4 @@
 #require './hellomonkey'
-require './secondperson'
+#require './secondperson'
+require './fullfeatured'
 run Sinatra::Application
