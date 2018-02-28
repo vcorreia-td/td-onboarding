@@ -92,15 +92,15 @@ get '/new-talking-to-person' do
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('Hello person')
     r.dial do |dial|
+      dial.number('+351937753869', 
+                  url: "/new-talking-to-person/client-join-conference?room=#{room}", 
+                  method: 'POST')
       dial.conference(room,
                       start_conference_on_enter: true,
                       end_conference_on_exit: true,
                       # hack :(
                       statusCallback: "https://secret-shelf-83431.herokuapp.com/new-talking-to-person/handle-hangup",
                       status_callback_event: 'end')
-      dial.number('+351937753869', 
-                  url: "/new-talking-to-person/client-join-conference?room=#{room}", 
-                  method: 'POST')
     end
   end.to_s
 end
