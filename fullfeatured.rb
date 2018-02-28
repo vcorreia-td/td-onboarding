@@ -49,14 +49,25 @@ get '/talking-to-person' do
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('Hello person')
     r.dial do |dial|
-      dial.number('+351937753869', url: '/talking-to-person/client-notification', method: 'GET')
+      dial.number('+351937753869', 
+                  url: '/talking-to-person/client-notification', 
+                  method: 'GET',
+                  statusCallback: '/talking-to-person/hangup-notification',
+                  statusCalBackMethod: 'GET',
+                  statusCallbackEvent: 'completed')
     end  
-    r.say('Goodbye person')
+    # r.say('Goodbye person')
   end.to_s
 end
 
 get '/talking-to-person/client-notification' do 
   Twilio::TwiML::VoiceResponse.new do |r|
-    r.say('You are going to talk to a person')
+    r.say('You are going to talk to a person.')
+  end.to_s
+end
+
+get '/talking-to-person/hangup-notification' do
+  Twilio::TwiML::VoiceResponse.new do |r|
+    r.say('The other party hung up.')
   end.to_s
 end
