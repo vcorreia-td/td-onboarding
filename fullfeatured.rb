@@ -116,7 +116,7 @@ post '/new-talking-to-person/client-notification' do
   end.to_s
 end
 
-post '(new-talking-to-people/handle-hangup' do
+post '/new-talking-to-people/handle-hangup' do
   room = params['room']
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('You are going to talk to a person.')
