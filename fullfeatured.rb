@@ -36,7 +36,7 @@ get '/talk-to-monkey/handle-gather' do
   end.to_s
 end
 
-get 'monkey-respond' do
+get '/monkey-respond' do
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('I am another monkey.')
   end.to_s
