@@ -91,13 +91,13 @@ get '/new-talking-to-person' do
   room = 'My Room'
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('Hello person')
-    r.conference(room,
-                 start_conference_on_enter: true,
-                 end_conference_on_exit: true,
-                 # hack :(
-                 statusCallback: "https://secret-shelf-83431.herokuapp.com/new-talking-to-person/handle-hangup",
-                 status_callback_event: 'end')
     r.dial do |dial|
+      dial.conference(room,
+                      start_conference_on_enter: true,
+                      end_conference_on_exit: true,
+                      # hack :(
+                      statusCallback: "https://secret-shelf-83431.herokuapp.com/new-talking-to-person/handle-hangup",
+                      status_callback_event: 'end')
       dial.number('+351937753869', 
                   url: "/new-talking-to-person/client-join-conference?room=#{room}", 
                   method: 'POST')
@@ -109,10 +109,12 @@ post '/new-talking-to-person/client-notification' do
   room = params['room']
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('You are going to talk to a person.')
-    r.conference(room,
-                 end_conference_on_exit: true,
-                 statusCallback: "https://secret-shelf-83431.herokuapp.com/new-talking-to-person/handle-hangup",
-                 status_callback_event: 'end')
+    r dial do |dial|
+      dial.conference(room,
+                      end_conference_on_exit: true,
+                      statusCallback: "https://secret-shelf-83431.herokuapp.com/new-talking-to-person/handle-hangup",
+                      status_callback_event: 'end')
+    end
   end.to_s
 end
 
