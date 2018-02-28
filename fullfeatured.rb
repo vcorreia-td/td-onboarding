@@ -41,3 +41,27 @@ get '/monkey-respond' do
     r.say('I am another monkey.')
   end.to_s
 end
+
+## call person
+
+# @client = Twilio::REST::Client.new ENV['account_sid'], ENV['auth_token']
+
+get '/talking-to-person' do
+  from = params['From']
+  Twilio::TwiML::VoiceResponse.new do |r|
+    r.say('Hello person')
+    r.dial(number: '+19165710211')
+    r.say('Goodbye person')
+  end.to_s
+#   @call = @client.calls.create(
+#       :from => from,
+#       :to => '+351937753869',
+#       :url => '/talking-to-person/notification'
+#       )
+end
+
+get '/talking-to-person/notification' do 
+  Twilio::TwiML::VoiceResponse.new do |r|
+    r.say('You are going to talk to a person')
+  end.to_s
+end
