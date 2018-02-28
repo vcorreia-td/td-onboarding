@@ -53,7 +53,7 @@ get '/talking-to-person' do
                   url: '/talking-to-person/client-notification', 
                   method: 'GET',
                   statusCallback: '/talking-to-person/hangup-notification',
-                  statusCalBackMethod: 'GET',
+                  statusCallbackMethod: 'GET',
                   statusCallbackEvent: 'completed')
     end  
     # r.say('Goodbye person')
