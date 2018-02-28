@@ -50,17 +50,15 @@ get '/talking-to-person' do
   from = params['From']
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('Hello person')
-    r.dial(number: '+351937753869')
+    r.dial do |dial|
+      dial.number('+351937753869')
+      dial.client(url: '/talking-to-person/client-notification', method: 'GET')
+    end  
     r.say('Goodbye person')
   end.to_s
-#   @call = @client.calls.create(
-#       :from => from,
-#       :to => '+351937753869',
-#       :url => '/talking-to-person/notification'
-#       )
 end
 
-get '/talking-to-person/notification' do 
+get '/talking-to-person/client-notification' do 
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('You are going to talk to a person')
   end.to_s
