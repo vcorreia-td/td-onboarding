@@ -52,7 +52,7 @@ get '/talking-to-person' do
       dial.number('+351937753869', 
                   url: '/talking-to-person/client-notification', 
                   method: 'GET',
-                  statusCallback: 'https://secret-shelf-83431.herokuapp.com/talking-to-person/hangup-notification',
+                  statusCallback: 'https://secret-shelf-83431.herokuapp.com/talking-to-person/handle-hangup',
                   statusCallbackMethod: 'POST',
                   statusCallbackEvent: 'completed')
     end
@@ -71,4 +71,10 @@ post '/talking-to-person/hangup-notification' do
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('The other party hung up.')
   end.to_s
+end
+
+post '/talking-to-person/handle-hangup' do
+    Twilio::TwiML::VoiceResponse.new do |r|
+        r.redirect('/talking-to-person/hangup-notification')
+    end.to_s
 end
