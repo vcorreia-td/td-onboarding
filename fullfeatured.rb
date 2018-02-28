@@ -52,7 +52,7 @@ get '/talking-to-person' do
       dial.number('+351937753869', 
                   url: '/talking-to-person/client-notification', 
                   method: 'GET',
-                  statusCallback: '/talking-to-person/hangup-notification',
+                  statusCallback: 'https://secret-shelf-83431.herokuapp.com/talking-to-person/hangup-notification',
                   statusCallbackMethod: 'POST',
                   statusCallbackEvent: 'completed')
     end  
