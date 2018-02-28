@@ -100,6 +100,7 @@ get '/new-talking-to-person' do
                       end_conference_on_exit: true,
                       # hack :(
                       statusCallback: "https://secret-shelf-83431.herokuapp.com/new-talking-to-people/handle-hangup",
+                      statusCallbackMethod = 'POST',
                       status_callback_event: 'end')
     end
   end.to_s
@@ -114,6 +115,7 @@ post '/new-talking-to-person/client-join-conference/:room' do
                       start_conference_on_enter: true,
                       end_conference_on_exit: true,
                       statusCallback: "https://secret-shelf-83431.herokuapp.com/new-talking-to-people/handle-hangup",
+                      statusCallbackMethod = 'POST',
                       status_callback_event: 'end')
     end
   end.to_s
