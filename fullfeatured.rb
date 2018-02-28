@@ -93,7 +93,7 @@ get '/new-talking-to-person' do
     r.say('Hello person')
     r.dial do |dial|
       dial.number('+351937753869', 
-                  url: "/new-talking-to-person/client-join-conference?room=#{room}", 
+                  url: "/new-talking-to-person/client-join-conference/#{room}", 
                   method: 'POST')
       dial.conference(room,
                       start_conference_on_enter: true,
@@ -105,7 +105,7 @@ get '/new-talking-to-person' do
   end.to_s
 end
 
-post '/new-talking-to-person/client-join-conference' do 
+post '/new-talking-to-person/client-join-conference/:room' do 
   room = params['room']
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('You are going to talk to a person.')
