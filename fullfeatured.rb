@@ -53,7 +53,7 @@ get '/talking-to-person' do
                   url: '/talking-to-person/client-notification', 
                   method: 'GET',
                   statusCallback: 'https://secret-shelf-83431.herokuapp.com/talking-to-person/hangup-notification',
-                  statusCallbackMethod: 'POST',
+                  statusCallbackMethod: 'GET',
                   statusCallbackEvent: 'completed')
     end  
     # r.say('Goodbye person')
@@ -66,7 +66,7 @@ get '/talking-to-person/client-notification' do
   end.to_s
 end
 
-post '/talking-to-person/hangup-notification' do
+get '/talking-to-person/hangup-notification' do
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('The other party hung up.')
   end.to_s
