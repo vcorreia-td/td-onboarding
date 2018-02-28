@@ -44,8 +44,6 @@ end
 
 ## call person
 
-# @client = Twilio::REST::Client.new ENV['account_sid'], ENV['auth_token']
-
 get '/talking-to-person' do
   from = params['From']
   Twilio::TwiML::VoiceResponse.new do |r|
