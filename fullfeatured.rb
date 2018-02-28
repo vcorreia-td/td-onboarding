@@ -100,7 +100,7 @@ get '/new-talking-to-person' do
                       end_conference_on_exit: true,
                       # hack :(
                       statusCallback: "https://secret-shelf-83431.herokuapp.com/new-talking-to-people/handle-hangup",
-                      statusCallbackMethod: 'POST',
+                      statusCallbackMethod: 'GET',
                       status_callback_event: 'end')
     end
   end.to_s
@@ -115,13 +115,13 @@ post '/new-talking-to-person/client-join-conference/:room' do
                       start_conference_on_enter: true,
                       end_conference_on_exit: true,
                       statusCallback: "https://secret-shelf-83431.herokuapp.com/new-talking-to-people/handle-hangup",
-                      statusCallbackMethod: 'POST',
+                      statusCallbackMethod: 'GET',
                       status_callback_event: 'end')
     end
   end.to_s
 end
 
-post '/new-talking-to-people/handle-hangup' do
+get '/new-talking-to-people/handle-hangup' do
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('You are going to talk to a person.')
     r.hangup
