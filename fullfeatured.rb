@@ -127,3 +127,10 @@ get '/new-talking-to-people/handle-hangup' do
     r.hangup
   end.to_s
 end
+
+
+###################
+## NEXT APPROACH ##
+###################
+
+## manage the conference and call procedurally :|
