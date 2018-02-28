@@ -56,7 +56,7 @@ get '/talking-to-person' do
                   statusCallbackMethod: 'POST',
                   statusCallbackEvent: 'completed')
     end
-    r.redirect('./hangup-notification')
+    r.redirect('/hangup-notification')
     # r.say('Goodbye person')
   end.to_s
 end
