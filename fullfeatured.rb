@@ -55,7 +55,8 @@ get '/talking-to-person' do
                   statusCallback: 'https://secret-shelf-83431.herokuapp.com/talking-to-person/hangup-notification',
                   statusCallbackMethod: 'POST',
                   statusCallbackEvent: 'completed')
-    end  
+    end
+    r.redirect('./hangup-notification')
     # r.say('Goodbye person')
   end.to_s
 end
