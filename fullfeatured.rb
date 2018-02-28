@@ -120,7 +120,6 @@ post '/new-talking-to-person/client-join-conference/:room' do
 end
 
 post '/new-talking-to-people/handle-hangup' do
-  room = params['room']
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('You are going to talk to a person.')
     r.hangup
