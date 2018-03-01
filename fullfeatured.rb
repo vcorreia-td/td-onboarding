@@ -138,7 +138,7 @@ end
 
 @client = Twilio::REST::Client.new(ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN'])
 
-get '/newest-talk-to-person' do
+get '/newest-talking-to-person' do
   call_sid = params['CallSid']
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('Hello person')
@@ -147,11 +147,11 @@ get '/newest-talk-to-person' do
   end.to_s
 end
 
-post '/newest-talk-to-person/client-picked-up/:otherCallSid' do
+post '/newest-talking-to-person/client-picked-up/:otherCallSid' do
   other_call_sid = params['originalCallSid']
   call_sid = params['CallSid']
   other_call = @client.api.calls(other_call_sid)
-  other_call.update(url: "/newest-talk-to-person/join-conference/#{call_sid}")
+  other_call.update(url: "/newest-talking-to-person/join-conference/#{call_sid}")
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('You are going to talk to a person')
     r.dial do |dial|
@@ -166,7 +166,7 @@ post '/newest-talk-to-person/client-picked-up/:otherCallSid' do
   end.to_s
 end
 
-post '/newest-talk-to-person/join-conference/:otherCallSid' do
+post '/newest-talking-to-person/join-conference/:otherCallSid' do
   other_call_sid = params['otherCallSid']
   Twilio::TwiML::VoiceResponse.new do |r|
     r.dial do |dial|
@@ -184,9 +184,16 @@ end
 post 'newest-talking-to-person/handle-hangup/:otherCallSid' do
   other_call_sid = params['originalCallSid']
   other_call = @client.api.calls(other_call_sid)
-  other_call.update(url: "/newest-talk-to-person/message-and-hangup")
+  other_call.update(url: "/newest-talking-to-person/message-and-hangup")
   # I believe this is unnecessary
   Twilio::TwiML::VoiceResponse.new do |r|
+    r.hangup
+  end.to_s
+end
+
+post '/newest-talking-to-person/message-and-hangup' do
+  Twilio::TwiML::VoiceResponse.new do |r|
+    r.say('The other person hung up.')
     r.hangup
   end.to_s
 end
