@@ -8,7 +8,7 @@ client = Twilio::REST::Client.new(ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN'])
 
 get '/interaction' do
   interaction_id = SecureRandom.uuid
-  room_id = secure
+  room_id = SecureRandom.uuid
   call_sid = params['CallSid']
   db[interaction_id] = [call_sid]
   other_call = client.api.create(url: "https://secret-shelf-83431.herokuapp.com/interaction/conference/#{interaction_id}",
