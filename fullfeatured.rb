@@ -152,6 +152,7 @@ end
 post '/newest-talking-to-person/client-picked-up/:otherCallSid' do
   other_call_sid = params['otherCallSid']
   call_sid = params['CallSid']
+  puts other_call_sid
   other_call = @client.api.calls(other_call_sid)
   other_call.update(url: "/newest-talking-to-person/join-conference/#{call_sid}")
   Twilio::TwiML::VoiceResponse.new do |r|
