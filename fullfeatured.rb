@@ -88,7 +88,7 @@ end
 
 get '/new-talking-to-person' do
   from = params['From']
-  room = 'My Room'
+  room = 'MyRoom'
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('Hello person')
     r.dial do |dial|
