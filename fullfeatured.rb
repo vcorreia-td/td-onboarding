@@ -136,7 +136,7 @@ end
 
 ## manage the conference and call procedurally :|
 
-@client = Twilio::REST::Client.new(ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN'])
+
 
 get '/newest-talking-to-person' do
   call_sid = params['CallSid']
@@ -152,8 +152,8 @@ end
 post '/newest-talking-to-person/client-picked-up/:otherCallSid' do
   other_call_sid = params['otherCallSid']
   call_sid = params['CallSid']
-  puts other_call_sid
-  other_call = @client.api.calls(other_call_sid)
+  client = Twilio::REST::Client.new(ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN'])
+  other_call = client.api.calls(other_call_sid)
   other_call.update(url: "/newest-talking-to-person/join-conference/#{call_sid}")
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('You are going to talk to a person')
@@ -186,7 +186,8 @@ end
 
 post 'newest-talking-to-person/handle-hangup/:otherCallSid' do
   other_call_sid = params['otherCallSid']
-  other_call = @client.api.calls(other_call_sid)
+  client = Twilio::REST::Client.new(ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN'])
+  other_call = client.api.calls(other_call_sid)
   other_call.update(url: "/newest-talking-to-person/message-and-hangup")
   # I believe this is unnecessary
   Twilio::TwiML::VoiceResponse.new do |r|
