@@ -154,7 +154,8 @@ post '/newest-talking-to-person/client-picked-up/:otherCallSid' do
   call_sid = params['CallSid']
   client = Twilio::REST::Client.new(ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN'])
   other_call = client.api.calls(other_call_sid)
-  other_call.update(url: "https://secret-shelf-83431.herokuapp.com/newest-talking-to-person/join-conference/#{call_sid}")
+  other_call.update(url: "https://secret-shelf-83431.herokuapp.com/newest-talking-to-person/join-conference/#{call_sid}",
+                    method: 'POST')
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('You are going to talk to a person')
     r.dial do |dial|
@@ -188,7 +189,8 @@ post 'newest-talking-to-person/handle-hangup/:otherCallSid' do
   other_call_sid = params['otherCallSid']
   client = Twilio::REST::Client.new(ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN'])
   other_call = client.api.calls(other_call_sid)
-  other_call.update(url: "https://secret-shelf-83431.herokuapp.com/newest-talking-to-person/message-and-hangup")
+  other_call.update(url: "https://secret-shelf-83431.herokuapp.com/newest-talking-to-person/message-and-hangup",
+                    method: 'POST')
   # I believe this is unnecessary
   Twilio::TwiML::VoiceResponse.new do |r|
     r.hangup
