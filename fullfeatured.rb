@@ -55,8 +55,9 @@ get '/talking-to-person' do
                   statusCallback: 'https://secret-shelf-83431.herokuapp.com/talking-to-person/handle-hangup',
                   statusCallbackMethod: 'POST',
                   statusCallbackEvent: 'completed')
+      dial.action('/talking-to-person/hangup-notification')
     end
-    r.redirect('/talking-to-person/hangup-notification')
+    # r.redirect('/talking-to-person/hangup-notification')
     # r.say('Goodbye person')
   end.to_s
 end
@@ -129,8 +130,63 @@ get '/new-talking-to-person/handle-hangup' do
 end
 
 
-###################
-## NEXT APPROACH ##
-###################
+#####################
+## NEWEST APPROACH ##
+#####################
 
 ## manage the conference and call procedurally :|
+
+@client = Twilio::REST::Client.new(ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN'])
+
+get '/newest-talk-to-person' do
+  call_sid = params['CallSid']
+  Twilio::TwiML::VoiceResponse.new do |r|
+    r.say('Hello person')
+    dial.number('+351937753869',
+                url: "/newest-talking-to-person/client-picked-up/#{call_sid}")
+  end.to_s
+end
+
+post '/newest-talk-to-person/client-picked-up/:otherCallSid' do
+  other_call_sid = params['originalCallSid']
+  call_sid = params['CallSid']
+  other_call = @client.api.calls(other_call_sid)
+  other_call.update(url: "/newest-talk-to-person/join-conference/#{call_sid}")
+  Twilio::TwiML::VoiceResponse.new do |r|
+    r.say('You are going to talk to a person')
+    r.dial do |dial|
+      dial.conference('myRoom',
+                      start_conference_on_enter: true,
+                      end_conference_on_exit: false,
+                      # hack :(
+                      statusCallback: "https://secret-shelf-83431.herokuapp.com/newest-talking-to-person/handle-hangup/#{other_call_sid}",
+                      statusCallbackMethod: 'POST',
+                      status_callback_event: 'leave')
+    end
+  end.to_s
+end
+
+post '/newest-talk-to-person/join-conference/:otherCallSid' do
+  other_call_sid = params['otherCallSid']
+  Twilio::TwiML::VoiceResponse.new do |r|
+    r.dial do |dial|
+      dial.conference('myRoom',
+                      start_conference_on_enter: true,
+                      end_conference_on_exit: false,
+                      # hack :(
+                      statusCallback: "https://secret-shelf-83431.herokuapp.com/newest-talking-to-person/handle-hangup/#{other_call_sid}",
+                      statusCallbackMethod: 'POST',
+                      status_callback_event: 'leave')
+    end
+  end.to_s
+end
+
+post 'newest-talking-to-person/handle-hangup/:otherCallSid' do
+  other_call_sid = params['originalCallSid']
+  other_call = @client.api.calls(other_call_sid)
+  other_call.update(url: "/newest-talk-to-person/message-and-hangup")
+  # I believe this is unnecessary
+  Twilio::TwiML::VoiceResponse.new do |r|
+    r.hangup
+  end.to_s
+end
