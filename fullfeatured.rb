@@ -142,8 +142,10 @@ get '/newest-talking-to-person' do
   call_sid = params['CallSid']
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('Hello person')
-    dial.number('+351937753869',
-                url: "/newest-talking-to-person/client-picked-up/#{call_sid}")
+    r.dial do |dial|
+      dial.number('+351937753869',
+                  url: "/newest-talking-to-person/client-picked-up/#{call_sid}")
+    end
   end.to_s
 end
 
