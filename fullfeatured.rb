@@ -140,9 +140,6 @@ end
 
 get '/newest-talking-to-person' do
   call_sid = params['CallSid']
-  puts 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-  puts ENV['ACCOUNT_SID']
-  puts ENV['AUTH_TOKEN']
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('Hello person')
     r.dial do |dial|
@@ -153,7 +150,7 @@ get '/newest-talking-to-person' do
 end
 
 post '/newest-talking-to-person/client-picked-up/:otherCallSid' do
-  other_call_sid = params['originalCallSid']
+  other_call_sid = params['otherCallSid']
   call_sid = params['CallSid']
   other_call = @client.api.calls(other_call_sid)
   other_call.update(url: "/newest-talking-to-person/join-conference/#{call_sid}")
@@ -187,7 +184,7 @@ post '/newest-talking-to-person/join-conference/:otherCallSid' do
 end
 
 post 'newest-talking-to-person/handle-hangup/:otherCallSid' do
-  other_call_sid = params['originalCallSid']
+  other_call_sid = params['otherCallSid']
   other_call = @client.api.calls(other_call_sid)
   other_call.update(url: "/newest-talking-to-person/message-and-hangup")
   # I believe this is unnecessary
