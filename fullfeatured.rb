@@ -110,7 +110,7 @@ post '/new-talking-to-person/client-join-conference/:room' do
   room = params['room']
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('You are going to talk to a person.')
-    r dial do |dial|
+    r.dial do |dial|
       dial.conference(room,
                       start_conference_on_enter: true,
                       end_conference_on_exit: true,
