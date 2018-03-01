@@ -36,7 +36,7 @@ post '/interaction/conference/:interaction_id' do
   puts db[interaction_id]
   db[interaction_id].push(call_sid)
   Twilio::TwiML::VoiceResponse.new do |r|
-    r.says('Prepare to talk to a person')
+    r.say('Prepare to talk to a person')
     r.dial do |dial|
       r.conference(interaction_id,
                         start_conference_on_enter: true,
