@@ -52,7 +52,7 @@ post '/interaction/hangup/:interaction_id' do
   interaction_id = params['interaction_id']
   call_sid = params['CallSid']
   db[interaction_id].delete(call_sid)
-  db.each do |cs|
+  db[interaction_id].each do |cs|
     call = client.api.calls(cs)
     call.update(url: 'https://secret-shelf-83431.herokuapp.com/interaction/goodbye',
                 method: 'GET')
