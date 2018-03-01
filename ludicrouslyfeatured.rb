@@ -32,19 +32,18 @@ end
 
 post '/interaction/conference/:interaction_id' do
   interaction_id = params['interaction_id']
-  call_sid = params['CallSid']
-  puts db[interaction_id]
+  call_sid = params['CallSid']ß
   db[interaction_id].push(call_sid)
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('Prepare to talk to a person')
     r.dial do |dial|
-      r.conference(interaction_id,
-                        start_conference_on_enter: true,
-                        end_conference_on_exit: false,
-                        # hack :(
-                        statusCallback: "https://secret-shelf-83431.herokuapp.com/interaction/hangup/#{interaction_id}",
-                        statusCallbackMethod: 'POST',
-                        status_callback_event: 'leave')
+      dial.conference(interaction_id,
+                      start_conference_on_enter: true,
+                      end_conference_on_exit: false,
+                      # hack :(
+                      statusCallback: "https://secret-shelf-83431.herokuapp.com/interaction/hangup/#{interaction_id}",
+                      statusCallbackMethod: 'POST',
+                      status_callback_event: 'leave')
     end
   end.to_s
 end
