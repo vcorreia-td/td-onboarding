@@ -13,7 +13,8 @@ get '/interaction' do
   db[interaction_id] = [call_sid]
   other_call = client.calls.create(url: "https://secret-shelf-83431.herokuapp.com/interaction/conference/#{interaction_id}",
                                  to: '+351937753869',
-                                 from: params['From'])
+                                 #from: params['From'])
+                                 from: '+19783062153')
   db[interaction_id] = [call_sid]
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('You are going to talk to a person')
