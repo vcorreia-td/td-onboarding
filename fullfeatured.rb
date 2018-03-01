@@ -140,6 +140,9 @@ end
 
 get '/newest-talking-to-person' do
   call_sid = params['CallSid']
+  puts 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+  puts ENV['ACCOUNT_SID']
+  puts ENV['AUTH_TOKEN']
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('Hello person')
     r.dial do |dial|
