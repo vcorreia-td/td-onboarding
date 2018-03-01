@@ -1,7 +1,7 @@
 #require './hellomonkey'
 #require './secondperson'
 #require './fullfeatured'
-require 'ludicrouslyfeatured'
+require './ludicrouslyfeatured'
 
 $stdout.sync = true
 
