@@ -165,7 +165,7 @@ post '/newest-talking-to-person/client-picked-up/:otherCallSid' do
                       # hack :(
                       statusCallback: "https://secret-shelf-83431.herokuapp.com/newest-talking-to-person/handle-hangup/#{other_call_sid}",
                       statusCallbackMethod: 'POST',
-                      status_callback_event: 'leave')
+                      statusEallbackEvent: 'leave')
     end
   end.to_s
 end
@@ -180,7 +180,7 @@ post '/newest-talking-to-person/join-conference/:otherCallSid' do
                       # hack :(
                       statusCallback: "https://secret-shelf-83431.herokuapp.com/newest-talking-to-person/handle-hangup/#{other_call_sid}",
                       statusCallbackMethod: 'POST',
-                      status_callback_event: 'leave')
+                      statusCallbackEvent: 'leave')
     end
   end.to_s
 end
