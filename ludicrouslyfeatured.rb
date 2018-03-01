@@ -32,7 +32,7 @@ end
 
 post '/interaction/conference/:interaction_id' do
   interaction_id = params['interaction_id']
-  call_sid = params['CallSid']ß
+  call_sid = params['CallSid']
   db[interaction_id].push(call_sid)
   Twilio::TwiML::VoiceResponse.new do |r|
     r.say('Prepare to talk to a person')
