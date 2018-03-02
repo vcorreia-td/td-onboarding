@@ -4,11 +4,13 @@ require 'twilio-ruby'
 require 'securerandom'
 
 if File.file? '.env'
-  open('.env', 'r').readlines.each {|l| kv = l.split('='); ENV[kv[0]] = kv[1];}
+  open('.env', 'r').readlines.each {|l| kv = l.split('='); ENV[kv[0]] = kv[1].strip;}
 end
 
 db = {}
 client = Twilio::REST::Client.new(ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN'])
+puts ENV['ACCOUNT_SID']
+puts ENV['AUTH_TOKEN']
 puts client
 
 # domain = 'https://secret-shelf-83431.herokuapp.com'
